@@ -2,6 +2,8 @@
 
 ## Python Notes
 
+Make sure to make a dbconfig.py file so you can connect the server to your MySQL server properly. Doing this will allow us to use our databases without having the same login and without changing the code everytime we need to try it on our end.
+
 For our connections we need:
 
 ### GUI Side
