@@ -1,6 +1,8 @@
 <!-- homepage.html -->
 
 <head>
+    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+
     <Title>Service Viewer App</Title>
     <style>
         .content{
@@ -8,23 +10,33 @@
             margin: auto;
         }
     </style>
+
 </head>
 
 <body>
 
     <table class="content">
         <tr>
-            <th>Name</th>
-            <th>Number</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Theme</th> <!-- maybe make this a link to the detail page -->
+            <th>Detail</th> <!-- this is currently where we'll put the link-->
         </tr>
+        
+        <!-- we'll use python to put the details here -->
+        <!--could even use a comment as the delimiter to split and insert the data-->
         <tr>
-            <td>Jack</td>
-            <td>60</td>
+            <td>today</td>
+            <td>now</td>
+            <td>church</td>
+            <td>
+                <a href="/details" target="_self">somewhere</a>
+            </td>
         </tr>
-        <tr>
-            <td>Nina</td>
-            <td>32</td>
-        </tr>
+
     </table>
 
+
+
+    Church Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 </body>
