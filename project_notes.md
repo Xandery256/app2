@@ -19,3 +19,7 @@ For our connections we need:
 ### DB side
 
 All we really need atm is a procedure call and a place to store that data to give it back to the GUI
+
+## Database Notes
+
+Make sure you create a wsoapp2 database using Schaub's script and then use the [create_views.sql](create_views.sql) script to get the views built.

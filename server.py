@@ -52,7 +52,8 @@ def favicon():
 def get_service_details(serviceID) -> cursor:
     cursor = create_cursor()
     cursor.execute("""
-        select 
+        select seq_num, event, title, name, notes
+        from service_view
 
     """)
 
@@ -95,7 +96,7 @@ def make_details_table(result: cursor) -> str:
 
 
 def create_cursor():
-    con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp', host=dbconfig.HOST)
+    con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
     return con.cursor()
 
 
