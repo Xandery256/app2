@@ -1,148 +1,123 @@
-Drop if exists organist;
+DROP VIEW IF EXISTS organist;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `wsoapp`.`organist` AS
+CREATE VIEW `wsoapp2`.`organist` AS
     SELECT 
-        `wsoapp`.`fills_role`.`Service_ID` AS `service_id`,
-        CONCAT(`wsoapp`.`person`.`First_Name`,
+        `wsoapp2`.`fills_role`.`Service_ID` AS `service_id`,
+        CONCAT(`wsoapp2`.`person`.`First_Name`,
                 ' ',
-                `wsoapp`.`person`.`Last_Name`) AS `organist_name`
+                `wsoapp2`.`person`.`Last_Name`) AS `organist_name`
     FROM
-        (`wsoapp`.`fills_role`
-        JOIN `wsoapp`.`person` ON ((`wsoapp`.`fills_role`.`Person_ID` = `wsoapp`.`person`.`Person_ID`)))
+        (`wsoapp2`.`fills_role`
+        JOIN `wsoapp2`.`person` ON ((`wsoapp2`.`fills_role`.`Person_ID` = `wsoapp2`.`person`.`Person_ID`)))
     WHERE
-        (`wsoapp`.`fills_role`.`Role_Type` = 'O');
+        (`wsoapp2`.`fills_role`.`Role_Type` = 'O');
 
-Drop if exists pianist;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `wsoapp`.`pianist` AS
+DROP VIEW IF EXISTS pianist;
+
+CREATE VIEW `wsoapp2`.`pianist` AS
     SELECT 
-        `wsoapp`.`fills_role`.`Service_ID` AS `service_id`,
-        CONCAT(`wsoapp`.`person`.`First_Name`,
+        `wsoapp2`.`fills_role`.`Service_ID` AS `service_id`,
+        CONCAT(`wsoapp2`.`person`.`First_Name`,
                 ' ',
-                `wsoapp`.`person`.`Last_Name`) AS `pianist_name`
+                `wsoapp2`.`person`.`Last_Name`) AS `pianist_name`
     FROM
-        (`wsoapp`.`fills_role`
-        JOIN `wsoapp`.`person` ON ((`wsoapp`.`fills_role`.`Person_ID` = `wsoapp`.`person`.`Person_ID`)))
+        (`wsoapp2`.`fills_role`
+        JOIN `wsoapp2`.`person` ON ((`wsoapp2`.`fills_role`.`Person_ID` = `wsoapp2`.`person`.`Person_ID`)))
     WHERE
-        (`wsoapp`.`fills_role`.`Role_Type` = 'P');
+        (`wsoapp2`.`fills_role`.`Role_Type` = 'P');
 
-Drop if exists songleader;
+DROP VIEW IF EXISTS songleader;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `wsoapp`.`songleader` AS
+CREATE VIEW `wsoapp2`.`songleader` AS
     SELECT 
-        `wsoapp`.`fills_role`.`Service_ID` AS `service_id`,
-        CONCAT(`wsoapp`.`person`.`First_Name`,
+        `wsoapp2`.`fills_role`.`Service_ID` AS `service_id`,
+        CONCAT(`wsoapp2`.`person`.`First_Name`,
                 ' ',
-                `wsoapp`.`person`.`Last_Name`) AS `songleader_name`
+                `wsoapp2`.`person`.`Last_Name`) AS `songleader_name`
     FROM
-        (`wsoapp`.`fills_role`
-        JOIN `wsoapp`.`person` ON ((`wsoapp`.`fills_role`.`Person_ID` = `wsoapp`.`person`.`Person_ID`)))
+        (`wsoapp2`.`fills_role`
+        JOIN `wsoapp2`.`person` ON ((`wsoapp2`.`fills_role`.`Person_ID` = `wsoapp2`.`person`.`Person_ID`)))
     WHERE
-        (`wsoapp`.`fills_role`.`Role_Type` = 'S');
+        (`wsoapp2`.`fills_role`.`Role_Type` = 'S');
 
 
-Drop if exists song_name;
+DROP VIEW IF EXISTS song_name;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `wsoapp`.`song_name` AS
+CREATE VIEW `wsoapp2`.`song_name` AS
     SELECT 
-        `wsoapp`.`song`.`Song_ID` AS `song_id`,
+        `wsoapp2`.`song`.`Song_ID` AS `song_id`,
         (CASE
             WHEN
-                (`wsoapp`.`song`.`Song_Type` = 'C')
+                (`wsoapp2`.`song`.`Song_Type` = 'C')
             THEN
-                CONCAT(`wsoapp`.`song`.`Hymnbook_Num`,
+                CONCAT(`wsoapp2`.`song`.`Hymnbook_Num`,
                         ' - ',
-                        `wsoapp`.`song`.`Title`)
-            WHEN (`wsoapp`.`song`.`Song_Type` = 'A') THEN `wsoapp`.`song`.`Title`
+                        `wsoapp2`.`song`.`Title`)
+            WHEN (`wsoapp2`.`song`.`Song_Type` = 'A') THEN `wsoapp2`.`song`.`Title`
         END) AS `name`
     FROM
-        `wsoapp`.`song`;
+        `wsoapp2`.`song`;
 
 
-Drop if exists service_view;
+DROP VIEW IF EXISTS service_view;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `wsoapp`.`service_view` AS
+CREATE VIEW `wsoapp2`.`service_view` AS
     SELECT 
-        `wsoapp`.`service`.`Service_ID` AS `service_id`,
-        `wsoapp`.`service`.`Svc_DateTime` AS `svc_datetime`,
-        `wsoapp`.`service`.`Theme_Event` AS `theme`,
+        `wsoapp2`.`service`.`Service_ID` AS `service_id`,
+        `wsoapp2`.`service`.`Svc_DateTime` AS `svc_datetime`,
+        `wsoapp2`.`service`.`Theme_Event` AS `theme`,
         `songleader`.`songleader_name` AS `songleader`,
         `organist`.`organist_name` AS `organist`,
         `pianist`.`pianist_name` AS `pianist`,
-        `wsoapp`.`service_item`.`Seq_Num` AS `seq_num`,
+        `wsoapp2`.`service_item`.`Seq_Num` AS `seq_num`,
         (SELECT 
-                `wsoapp`.`event_type`.`Description`
+                `wsoapp2`.`event_type`.`Description`
             FROM
-                `wsoapp`.`event_type`
+                `wsoapp2`.`event_type`
             WHERE
-                (`wsoapp`.`event_type`.`Event_Type_ID` = `wsoapp`.`service_item`.`Event_Type_ID`)) AS `event`,
+                (`wsoapp2`.`event_type`.`Event_Type_ID` = `wsoapp2`.`service_item`.`Event_Type_ID`)) AS `event`,
         (CASE
             WHEN
-                (`wsoapp`.`service_item`.`Song_ID` IS NOT NULL)
+                (`wsoapp2`.`service_item`.`Song_ID` IS NOT NULL)
             THEN
                 (SELECT 
                         `song_name`.`name`
                     FROM
-                        `wsoapp`.`song_name`
+                        `wsoapp2`.`song_name`
                     WHERE
-                        (`song_name`.`song_id` = `wsoapp`.`service_item`.`Song_ID`))
-            ELSE `wsoapp`.`service_item`.`Title`
+                        (`song_name`.`song_id` = `wsoapp2`.`service_item`.`Song_ID`))
+            ELSE `wsoapp2`.`service_item`.`Title`
         END) AS `title`,
         (CASE
             WHEN
-                (`wsoapp`.`service_item`.`Ensemble_ID` IS NOT NULL)
+                (`wsoapp2`.`service_item`.`Ensemble_ID` IS NOT NULL)
             THEN
                 (SELECT 
-                        `wsoapp`.`ensemble`.`Name`
+                        `wsoapp2`.`ensemble`.`Name`
                     FROM
-                        `wsoapp`.`ensemble`
+                        `wsoapp2`.`ensemble`
                     WHERE
-                        (`wsoapp`.`ensemble`.`Ensemble_ID` = `wsoapp`.`service_item`.`Ensemble_ID`))
+                        (`wsoapp2`.`ensemble`.`Ensemble_ID` = `wsoapp2`.`service_item`.`Ensemble_ID`))
             WHEN
-                (`wsoapp`.`service_item`.`Person_ID` IS NOT NULL)
+                (`wsoapp2`.`service_item`.`Person_ID` IS NOT NULL)
             THEN
                 (SELECT 
-                        CONCAT(`wsoapp`.`person`.`First_Name`,
+                        CONCAT(`wsoapp2`.`person`.`First_Name`,
                                     ' ',
-                                    `wsoapp`.`person`.`Last_Name`)
+                                    `wsoapp2`.`person`.`Last_Name`)
                     FROM
-                        `wsoapp`.`person`
+                        `wsoapp2`.`person`
                     WHERE
-                        (`wsoapp`.`person`.`Person_ID` = `wsoapp`.`service_item`.`Person_ID`))
+                        (`wsoapp2`.`person`.`Person_ID` = `wsoapp2`.`service_item`.`Person_ID`))
             ELSE NULL
         END) AS `name`,
-        `wsoapp`.`service_item`.`Notes` AS `notes`
+        `wsoapp2`.`service_item`.`Notes` AS `notes`
     FROM
-        ((((`wsoapp`.`service`
-        LEFT JOIN `wsoapp`.`organist` ON ((`wsoapp`.`service`.`Service_ID` = `organist`.`service_id`)))
-        LEFT JOIN `wsoapp`.`songleader` ON ((`songleader`.`service_id` = `wsoapp`.`service`.`Service_ID`)))
-        LEFT JOIN `wsoapp`.`pianist` ON ((`pianist`.`service_id` = `wsoapp`.`service`.`Service_ID`)))
-        LEFT JOIN `wsoapp`.`service_item` ON ((`wsoapp`.`service_item`.`Service_ID` = `wsoapp`.`service`.`Service_ID`)))
-    ORDER BY `wsoapp`.`service`.`Service_ID` , `wsoapp`.`service_item`.`Seq_Num`
-
-
-
-
-
-
+        ((((`wsoapp2`.`service`
+        LEFT JOIN `wsoapp2`.`organist` ON ((`wsoapp2`.`service`.`Service_ID` = `organist`.`service_id`)))
+        LEFT JOIN `wsoapp2`.`songleader` ON ((`songleader`.`service_id` = `wsoapp2`.`service`.`Service_ID`)))
+        LEFT JOIN `wsoapp2`.`pianist` ON ((`pianist`.`service_id` = `wsoapp2`.`service`.`Service_ID`)))
+        LEFT JOIN `wsoapp2`.`service_item` ON ((`wsoapp2`.`service_item`.`Service_ID` = `wsoapp2`.`service`.`Service_ID`)))
+    ORDER BY `wsoapp2`.`service`.`Service_ID` , `wsoapp2`.`service_item`.`Seq_Num`
 
