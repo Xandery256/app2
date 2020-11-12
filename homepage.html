@@ -5,11 +5,22 @@
     <style>
         .content{
             max-width: 700;
+            min-height: 500;
             margin: auto;
+            background-color: aquamarine;
+            font-family: Arial, Helvetica, sans-serif;
+            
         }
-
         .attribution{
             font-size: 10;
+        }
+        .table{
+            text-align: left;
+        }
+
+        .table_cell{
+            min-width: 100;
+            max-width: 200;
         }
     </style>
 
@@ -19,20 +30,21 @@
 
 
 
-
-    <table class="content">
-        <tr>
-            <th>Date and Time</th>
-            <th>Theme</th> <!-- maybe make this a link to the detail page -->
-            <th>Detail</th> <!-- this is currently where we'll put the link-->
-        </tr>
+    <div class="content">
+        <table class="table">
+            <tr>
+                <th>Date and Time</th>
+                <th>Theme</th> <!-- maybe make this a link to the detail page -->
+                <th>Detail</th> <!-- this is currently where we'll put the link-->
+            </tr>
+            
+            <!-- we'll use python to put the details here -->
+            <!--the following comment is a delimeter for putting in the table (not visible in browsers)-->
+            <!--{0}-->
+            
+        </table>
+    </div>
         
-        <!-- we'll use python to put the details here -->
-        <!--the following comment is a delimeter for putting in the table (not visible in browsers)-->
-        <!--{0}-->
-
-    </table>
-
 
    
 </body>

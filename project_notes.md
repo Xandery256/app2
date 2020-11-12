@@ -24,7 +24,6 @@ All we really need atm is a procedure call and a place to store that data to giv
 
 Make sure you create a wsoapp2 database using Schaub's script and then use the [create_views.sql](create_views.sql) script to get the views built.
 
-
 ## Time Log
 
 11/11 - Alexander - 25 min

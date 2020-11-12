@@ -5,12 +5,29 @@
     <style>
         .content{
             max-width: 700;
+            min-height: 500;
             margin: auto;
+            background-color: aquamarine;
+            font-family: Arial, Helvetica, sans-serif;
+            
         }
 
         .home_button{
             margin-top: 100px;
             margin-left: 100px;
+        }
+
+        .head_info{
+            font-weight: bold;
+            /* margin-left: 100px; */
+        }
+
+        .horizontal_group{
+            display: inline;;
+        }
+
+        .attribution{
+            font-size: 10;
         }
     </style>
 
@@ -19,24 +36,34 @@
 
 <body>
     <a href="/" class="home_button">Home</a>
-
-    <th>Date</th>
-    <th>Time</th>
-    <th>Theme/Event</th>
-    <th>Song Leader</th>
+    <div class="content">
     
-    <table class="content">
-        <tr>
-            <th>Sequence</th>
-            <th>Event</th>
-            <th>Title</th>
-            <th>Name</th>
-            <th>Notes</th>
-        </tr>
-
-        <!--{0}-->
-
-    </table>
-
-
+        <div class="horizontal_group">
+            <p class="head_info">Date and Time: </p> <p><!--{0}--></p>
+        </div>
+        <p class="head_info">Theme/Event: </p> <p><!--{0}--></p>
+        <p class="head_info">Song Leader: </p> <p><!--{0}--></p>
+        
+        
+        <table class="content">
+            <tr>
+                <th>Sequence</th>
+                <th>Event</th>
+                <th>Title</th>
+                <th>Name</th>
+                <th>Notes</th>
+            </tr>
+            
+            <!--{0}-->
+            
+        </table>
+    </div>
+        
+        
 </body>
+
+<footer>
+    <p class="attribution">
+        Church Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+    </p>
+</footer>

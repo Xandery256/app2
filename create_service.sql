@@ -1,3 +1,5 @@
+DELIMITER $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(date_time datetime(6), theme varchar(40), songleader varchar(36), out result varchar(100))
     DETERMINISTIC
 BEGIN
@@ -8,4 +10,4 @@ BEGIN
         insert into service_item (Service_Item_ID, Service_ID, Seq_Num, Event_Type)
 			values (1, (select Max(service_ID) from service), 1, 1);
 	end if;
-END
+END$$

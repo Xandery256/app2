@@ -39,26 +39,48 @@ def get_home():
 #details page handler
 @app.route('/details')
 def get_details():
-    serviceNo = request.args.get('serviceNo')
-    cursor = create_cursor()
+    serviceDateTime = request.args.get('datetime')
 
-    #this select statement runs against the service_view used to generate
-    #service documents in the last wsoapp. it matches information on the 
-    #serviceID provided in the function call
-    cursor.execute("""
-        select seq_num, event, title, name, notes
-        from service_view
-        where service.service_id = %s
-    """, (serviceNo,))
-
-    result = cursor.fetchall()
+    # theme, songleader, 
+    theme, songleader, result = get_service_details(serviceDateTime)
+    
     pageTable = make_details_table(result)   
 
     with open("details.html") as details:
         page = details.read()
-        pageTop, pageBottom = page.split(delim)
-        page = pageTop + pageTable + pageBottom
+
+        
+        pages = page.split(delim)
+        page  = pages[0] + serviceDateTime 
+        page += pages[1] + theme 
+        page += pages[2] + songleader 
+        page += pages[3] + pageTable 
+        page += pages[4]
+
+        #page = pages[0] + pageTable + pages[1]
         return page
+
+
+
+
+
+#now we need a thing to call his procedure
+#so i think i'll define another route for the bottle framework
+@app.route('/create')
+def createService():
+    
+    #get results of xander's procedure
+
+    with open('service_creation.html') as creation:
+        page = creation.read()
+        # pageTop, pageBottom = page.split(delim)
+
+
+
+
+        return page
+
+
 
 
 
@@ -92,20 +114,42 @@ def get_services():
 #get_service_details
 #this function takes an integer representing the serviceID
 #and returns a tuple with the results of select statement
-def get_service_details(serviceID: int):
+def get_service_details(serviceDate: int):
     con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
     curcon =  con.cursor()
+    
+
+    #get the theme
+    curcon.execute("""
+    select theme
+    from service_view
+    where service_view.svc_DateTime = %s
+    group by theme 
+    """, (serviceDate,))
+    theme = curcon.fetchall()
+
+    
+    #get the song leader
+    curcon.execute("""
+    select songleader
+    from service_view
+    where service_view.svc_DateTime = %s
+    group by songleader
+    """, (serviceDate,))
+    songleader = curcon.fetchall()
+
+    
     #this select statement runs against the service_view used to generate
     #service documents in the last wsoapp. it matches information on the 
     #serviceID provided in the function call
     curcon.execute("""
     select seq_num, event, title, name, notes
     from service_view
-    where service.service_id = %s
-    """, (serviceID,))
+    where service_view.svc_DateTime = %s
+    """, (serviceDate,))
 
-    result = cursor.fetchall()
-    return result
+    result = curcon.fetchall()
+    return  theme[0][0], songleader[0][0], result
 
 
 
@@ -121,9 +165,9 @@ def make_services_table(result):
 
         table_row = f"""
         <tr>
-            <td>{datetime}</td>
-            <td>{theme}</td>
-            <td>
+            <td class="table_cell">{datetime}</td>
+            <td class="table_cell">{theme}</td>
+            <td class="table_cell">
                 <a href="/details?datetime={datetime}">Detail</a>
             </td>
         </tr>
@@ -142,10 +186,13 @@ def make_details_table(result):
     table = ""
     for row in result:
         sequence, event, title, name, notes = row
+        
+        if title == None: title = ""
+        if notes == None: notes = ""
 
         table_row = f"""
         <tr>
-            <td>{sequence}</td>
+            <td class="table_cell">{sequence}</td>
             <td>{event}</td>
             <td>{title}</td>
             <td>{name}</td>
@@ -157,13 +204,6 @@ def make_details_table(result):
 
     return table    
 
-
-#create_cursor
-#takes no arguments
-#returns a cursor for the database
-def create_cursor():
-    con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
-    return con.cursor()
 
 
 if __name__ == "__main__":
