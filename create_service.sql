@@ -2,7 +2,7 @@ DROP procedure IF EXISTS `create_service`;
 
 DELIMITER $$
 USE `wsoapp2`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(template_time datetime(6), date_time datetime(6), theme varchar(40), songleader integer, out result varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(template_time datetime(6), date_time datetime(6), theme varchar(40), songleader integer, out result varchar(100), out code integer))
     DETERMINISTIC
 BEGIN
 	declare template integer;
