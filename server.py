@@ -74,18 +74,18 @@ def createService():
     
     #general pattern for getting a piece of information from the webpage
     # var = request.args.get('var')
-    #get template
+    #get template id
     template = request.args.get('template')
     #get datetime
     datetime = request.args.get('datetime')
     #get theme
     theme = request.args.get('theme')
-    #get songleader
+    #get songleader id
     songleader = request.args.get('songleader')
 
 
     #call stored procedure
-    var result = curcon.execute("""call create_service(%s,%s,%s,%s)""", (template, datetime, theme, songleader,))
+    var result = curcon.execute("""call create_service(%d,%s,%s,%d)""", (template, datetime, theme, songleader,))
     #get results of xander's procedure
 
 
