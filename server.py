@@ -100,6 +100,7 @@ def createService():
 
 
 
+
     with open('service_creation.html') as creation:
         page = creation.read()
         # pageTop, pageBottom = page.split(delim)
@@ -270,7 +271,6 @@ def make_songleaders_combo(result):
 
 
     return comboString
-
 
 
 if __name__ == "__main__":
