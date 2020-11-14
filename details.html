@@ -137,13 +137,18 @@
             <!-- need datetime, theme, songleader -->
             
             <label class="form_label" for="datetime">Date and Time *</label>
-            <input type="datetime-local" id="datetime" name="datetime" required><br><br>
+            <input type="datetime-local" id="datetime" name="datetime"  required><br><br>
             
             <label class="form_label" for="theme">Theme</label>
             <input type="text" id="theme" name="theme"><br><br>
 
             <label class="form_label" for="songleader">Songleader </label>
-            <input type="text" id="songleader" name="songleader"><br><br>
+            <select id="songleader" name="songleader">
+                <!--{0}-->
+            </select><br><br>
+
+
+            <input type="hidden" id="template" name="template" value="<!--{0}-->"/>
 
             <input type="submit" value="Create">
         </form>
