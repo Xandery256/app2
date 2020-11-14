@@ -91,11 +91,12 @@ def createService():
     theme = request.args.get('theme')
     #get songleader id
     songleader = request.args.get('songleader')
-
-
+    
     #call stored procedure
-    var result = curcon.execute("""call create_service(%d,%s,%s,%d)""", (template, datetime, theme, songleader,))
+    result = curcon.callproc("create_service", (template, datetime, theme, songleader))
     #get results of xander's procedure
+    # result[5] code
+    # result[4] message
 
 
 
