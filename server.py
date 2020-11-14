@@ -39,6 +39,7 @@ def get_home():
 #details page handler
 @app.route('/details')
 def get_details():
+    #/details?datetime=datetime%20string
     serviceDateTime = request.args.get('datetime')
 
     # theme, songleader, 
@@ -69,7 +70,20 @@ def get_details():
 @app.route('/create')
 def createService():
     
+    
+    #general pattern for getting a piece of information from the webpage
+    # var = request.args.get('var')
+
+    #get datetime
+    #get theme
+    #get songleader
+    #get template
+
+    #call stored procedure
+
     #get results of xander's procedure
+
+
 
     with open('service_creation.html') as creation:
         page = creation.read()
