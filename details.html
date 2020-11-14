@@ -4,48 +4,119 @@
     <Title>Service Viewer App</Title>
     <style>
         .content{
-            max-width: 700;
-            min-height: 500;
-            margin: auto;
+            max-width: 800;
+            min-width: 600;
+            min-height: 600;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 20;
             background-color: aquamarine;
             font-family: Arial, Helvetica, sans-serif;
             
         }
 
+        .page_title{
+            text-align: center;
+            font-size: larger;
+            font-weight: bold;
+        }
+
+        .form_title{
+            margin-top: 20;
+            text-align: left;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .service_form{
+            max-width: 800;
+            min-width: 600;
+            min-height: 200;
+            margin-top: 20;
+            margin-left: auto;
+            margin-right: auto;
+            
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        
+
+        .form_label{
+            margin-right: 20;
+        }
+
         .home_button{
-            margin-top: 100px;
-            margin-left: 100px;
+            align-content: center;
+            max-width: 800;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10;
         }
 
         .head_info{
+            margin-left: 30;
             font-weight: bold;
+            display: inline-block;
             /* margin-left: 100px; */
+        }
+
+        .head_data{
+            display: inline-block;            
         }
 
         .horizontal_group{
             display: inline;;
         }
 
+        .table{
+            text-align: left;
+            margin-top: 30;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .table_cell{
+            min-width: 80;
+            max-width: 200;
+            border-bottom: 1px solid #444444;
+            border-right: 1px solid #444444;
+        }
+
         .attribution{
+            align-content: center;
+            max-width: 800;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 40;
             font-size: 10;
         }
+
+
+
     </style>
 
 </head>
 
 
 <body>
-    <a href="/" class="home_button">Home</a>
+    <div class="home_button">
+        <a href="/" class="home_button">Home</a>
+    </div>
     <div class="content">
     
         <div class="horizontal_group">
-            <p class="head_info">Date and Time: </p> <p><!--{0}--></p>
+            <p class="head_info">Date and Time: </p> <p class="head_data"><!--{0}--></p>
         </div>
-        <p class="head_info">Theme/Event: </p> <p><!--{0}--></p>
-        <p class="head_info">Song Leader: </p> <p><!--{0}--></p>
+        <div>
+            <p class="head_info">Theme/Event: </p> <p class="head_data"><!--{0}--></p>
+        </div>
+        <div>
+            <p class="head_info">Song Leader: </p> <p class="head_data"><!--{0}--></p>
+        </div>
         
         
-        <table class="content">
+        <table class="table">
             <tr>
                 <th>Sequence</th>
                 <th>Event</th>
@@ -59,11 +130,32 @@
         </table>
     </div>
         
-        
+    <div class="service_form">
+        <form action="/create">
+            <p class="form_title">Create Service</p>
+            <p>* - required</p>
+            <!-- need datetime, theme, songleader -->
+            
+            <label class="form_label" for="datetime">Date and Time *</label>
+            <input type="datetime-local" id="datetime" name="datetime" required><br><br>
+            
+            <label class="form_label" for="theme">Theme</label>
+            <input type="text" id="theme" name="theme"><br><br>
+
+            <label class="form_label" for="songleader">Songleader </label>
+            <input type="text" id="songleader" name="songleader"><br><br>
+
+            <input type="submit" value="Create">
+        </form>
+    </div>    
+
+
 </body>
 
 <footer>
-    <p class="attribution">
-        Church Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-    </p>
+    <div class="attribution">
+        <p>
+            Church Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        </p>
+    </div>
 </footer>

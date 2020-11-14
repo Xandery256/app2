@@ -44,6 +44,9 @@ def get_details():
     # theme, songleader, 
     theme, songleader, result = get_service_details(serviceDateTime)
     
+    if theme == None: theme = "None"
+    if songleader == None: songleader = "None"
+
     pageTable = make_details_table(result)   
 
     with open("details.html") as details:
@@ -69,6 +72,16 @@ def get_details():
 @app.route('/create')
 def createService():
     
+    #general pattern for getting a piece of information from the webpage
+    # var = request.args.get('var')
+
+    #get datetime
+    #get theme
+    #get songleader
+    #get template
+
+    #call stored procedure
+
     #get results of xander's procedure
 
     with open('service_creation.html') as creation:
@@ -189,14 +202,15 @@ def make_details_table(result):
         
         if title == None: title = ""
         if notes == None: notes = ""
+        if name == None: name = ""
 
         table_row = f"""
         <tr>
             <td class="table_cell">{sequence}</td>
-            <td>{event}</td>
-            <td>{title}</td>
-            <td>{name}</td>
-            <td>{notes}</td>
+            <td class="table_cell">{event}</td>
+            <td class="table_cell">{title}</td>
+            <td class="table_cell">{name}</td>
+            <td class="table_cell">{notes}</td>
         </tr>
         """
     
