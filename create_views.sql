@@ -32,6 +32,7 @@ DROP VIEW IF EXISTS songleader;
 CREATE VIEW `wsoapp2`.`songleader` AS
     SELECT 
         `wsoapp2`.`fills_role`.`Service_ID` AS `service_id`,
+        `wsoapp2`.`person`.`Person_ID`,
         CONCAT(`wsoapp2`.`person`.`First_Name`,
                 ' ',
                 `wsoapp2`.`person`.`Last_Name`) AS `songleader_name`

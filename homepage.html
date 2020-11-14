@@ -4,16 +4,30 @@
     <Title>Service Viewer App</Title>
     <style>
         .content{
-            max-width: 700;
+            max-width: 800;
+            min-width: 600;
             min-height: 500;
             margin: auto;
             background-color: aquamarine;
             font-family: Arial, Helvetica, sans-serif;
             
         }
+
+        .page_title{
+            text-align: center;
+            font-size: larger;
+            font-weight: bold;
+        }
+
         .attribution{
+            align-content: center;
+            max-width: 800;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 40;
             font-size: 10;
         }
+
         .table{
             text-align: left;
             margin-top: 30;
@@ -22,8 +36,10 @@
         }
 
         .table_cell{
-            min-width: 100;
-            max-width: 200;
+            min-width: 200;
+            max-width: 300;
+            border-bottom: 1px solid #444444;
+            border-right: 1px solid #444444;
         }
 
     </style>
@@ -35,6 +51,9 @@
 
 
     <div class="content">
+        
+        <p class="page_title">Welcome to the Worship Service Order Creator</p>
+
         <table class="table">
             <tr>
                 <th>Date and Time</th>
@@ -54,7 +73,9 @@
 </body>
 
 <footer>
-    <p class="attribution">
-        Church Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-    </p>
+    <div class="attribution">
+        <p>
+            Church Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        </p>
+    </div>
 </footer>

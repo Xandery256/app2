@@ -45,7 +45,14 @@ def get_details():
     # theme, songleader, 
     theme, songleader, result = get_service_details(serviceDateTime)
     
-    pageTable = make_details_table(result)   
+    if theme == None: theme = "None"
+    if songleader == None: songleader = "None"
+
+    pageTable = make_details_table(result)  
+
+    previousLeaders = get_songleaders() 
+
+    leadersTable = make_songleaders_combo(previousLeaders)
 
     with open("details.html") as details:
         page = details.read()
@@ -56,7 +63,9 @@ def get_details():
         page += pages[1] + theme 
         page += pages[2] + songleader 
         page += pages[3] + pageTable 
-        page += pages[4]
+        page += pages[4] + leadersTable
+        page += pages[5] + serviceDateTime
+        page += pages[6]
 
         #page = pages[0] + pageTable + pages[1]
         return page
@@ -171,6 +180,23 @@ def get_service_details(serviceDate: int):
     return  theme[0][0], songleader[0][0], result
 
 
+#get_songleaders
+#takes no input
+#returns a list of songleaders
+def get_songleaders():
+    #create cursor
+    con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
+    curcon =  con.cursor()
+
+    #get the songleaders
+    curcon.execute("""
+        select Person_ID, songleader_name
+        from songleader    
+    """)
+
+    result = curcon.fetchall()
+    return result
+
 
 
 #make_services_table
@@ -208,20 +234,38 @@ def make_details_table(result):
         
         if title == None: title = ""
         if notes == None: notes = ""
+        if name == None: name = ""
 
         table_row = f"""
         <tr>
             <td class="table_cell">{sequence}</td>
-            <td>{event}</td>
-            <td>{title}</td>
-            <td>{name}</td>
-            <td>{notes}</td>
+            <td class="table_cell">{event}</td>
+            <td class="table_cell">{title}</td>
+            <td class="table_cell">{name}</td>
+            <td class="table_cell">{notes}</td>
         </tr>
         """
     
         table += table_row
 
     return table    
+
+
+
+#make_songleaders_combo
+#takes the results of a select statement executed by a cursor
+#returns a string of html
+def make_songleaders_combo(result):
+    comboString = ""
+
+    for row in result:
+        person_id, name = row
+        comboString += f"""
+        <option value="{person_id}">{name}</option>
+        """
+
+
+    return comboString
 
 
 
