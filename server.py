@@ -91,7 +91,7 @@ def createService():
     theme = request.args.get('theme')
     #get songleader id
     songleader = request.args.get('songleader')
-    
+
     #call stored procedure
     result = curcon.callproc("create_service", (template, datetime, theme, songleader))
     #get results of xander's procedure
@@ -104,7 +104,10 @@ def createService():
         page = creation.read()
         # pageTop, pageBottom = page.split(delim)
 
-
+        pages = page.split(delim)
+        page  = pages[0] + result[5] 
+        page += pages[1] + result[4]
+        page += pages[2]
 
 
         return page

@@ -138,7 +138,6 @@ CREATE VIEW `songusageview` AS
         LEFT JOIN `service_item` ON ((`song`.`Song_ID` = `service_item`.`Song_ID`)))
         LEFT JOIN `service` ON ((`service`.`Service_ID` = `service_item`.`Service_ID`)))
     WHERE
-        ((`song`.`Song_Type` <> 'C')
-            OR (`service`.`Svc_DateTime` IS NULL))
+        `song`.`Song_Type` <> 'C'
     GROUP BY `song`.`Song_ID`
     ORDER BY `LastUsedDate`;

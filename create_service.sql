@@ -8,7 +8,10 @@ BEGIN
 	declare template integer;
     declare new_service_id integer;
 	set result = "Your service has been created";
-    if (select Svc_DateTime from Service where Svc_DateTime = date_time) is not null then set result = "A service already exists at that time";
+	set code = 0;
+    if (select Svc_DateTime from Service where Svc_DateTime = date_time) is not null 
+		then set result = "A service already exists at that time"; 
+			set code = 1;
     else 
 		insert into Service (Svc_DateTime, Theme_Event) values (date_time, theme);
         select Service_ID into template from Service where Svc_DateTime = template_time;
