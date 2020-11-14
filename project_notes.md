@@ -26,7 +26,7 @@ Make sure you create a wsoapp2 database using Schaub's script and then use the [
 
 ## Time Log
 
-11/11 - Alexander - 25 min
-11/12 - Alexander - 1 hr 45 min
-11/13 - Alexander - 20 min
-11/14 - Alexander - 
+11/11 - Alexander - ~25 min
+11/12 - Alexander - ~1 hr 45 min
+11/13 - Alexander - ~20 min
+11/14 - Alexander - ~4 hr

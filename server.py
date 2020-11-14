@@ -83,7 +83,7 @@ def createService():
     
     #general pattern for getting a piece of information from the webpage
     # var = request.args.get('var')
-    #get template id
+    #get template datetime
     template = request.args.get('template')
     #get datetime
     datetime = request.args.get('datetime')
