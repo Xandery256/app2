@@ -1,6 +1,6 @@
 DELIMITER $$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(date_time datetime(6), theme varchar(40), songleader varchar(36), out result varchar(100))
+USE `wsoapp2`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(template_time datetime(6), date_time datetime(6), theme varchar(40), songleader integer, out result varchar(100), out code integer)
     DETERMINISTIC
 BEGIN
 	set result = "Your service has been created";
