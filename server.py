@@ -197,6 +197,7 @@ def get_songleaders():
     curcon.execute("""
         select Person_ID, songleader_name
         from songleader    
+        group by Person_ID
     """)
 
     result = curcon.fetchall()
