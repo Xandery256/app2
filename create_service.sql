@@ -2,16 +2,13 @@ DROP procedure IF EXISTS `create_service`;
 
 DELIMITER $$
 USE `wsoapp2`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(template_time datetime(6), date_time datetime(6), theme varchar(40), songleader integer, out result varchar(100), out code integer))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_service`(template_time datetime(6), date_time datetime(6), theme varchar(40), songleader integer, out code integer)
     DETERMINISTIC
 BEGIN
 	declare template integer;
     declare new_service_id integer;
-	set result = "Your service has been created";
 	set code = 0;
-    if (select Svc_DateTime from Service where Svc_DateTime = date_time) is not null 
-		then set result = "A service already exists at that time"; 
-			set code = 1;
+    if (select Svc_DateTime from Service where Svc_DateTime = date_time) is not null then set code = 1;
     else 
 		insert into Service (Svc_DateTime, Theme_Event) values (date_time, theme);
         select Service_ID into template from Service where Svc_DateTime = template_time;
