@@ -87,7 +87,7 @@ def createService():
     template = request.args.get('template')
     #get datetime
     datetime = request.args.get('datetime')
-    datetime.replace("T", " ")
+    
 
     #get theme
     theme = request.args.get('theme')
