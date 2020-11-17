@@ -87,10 +87,13 @@ def createService():
     template = request.args.get('template')
     #get datetime
     datetime = request.args.get('datetime')
+    datetime.replace("T", " ")
+
     #get theme
     theme = request.args.get('theme')
     #get songleader id
     songleader = request.args.get('songleader')
+
 
     #call stored procedure
     result = curcon.callproc("create_service", (template, datetime, theme, songleader, 1))
@@ -109,7 +112,6 @@ def createService():
         pages = page.split(delim)
         page  = pages[0] + msg
         page += pages[1]
-
 
         return page
 
@@ -272,14 +274,6 @@ def make_songleaders_combo(result):
 
 
     return comboString
-
-#convertDateTime
-#this function takes a date time format string from an html datetime input
-#returns the datetime string formatted for use with a mysql database
-def convertDateTime(original):
-    date, time = original.split("T")
-    result = date + "+" + time + r"%3A00"
-    return result
 
 
 if __name__ == "__main__":
