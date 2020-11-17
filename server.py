@@ -119,7 +119,6 @@ def createService():
 
 
 
-
 #this part is just for aesthetic to make the app a bit nicer
 #it adds an icon to the browser tab
 #works with Chrome. Opera seemed to be having trouble
@@ -146,6 +145,7 @@ def get_services():
 
     result = curcon.fetchall()
     return result
+
 
 #get_service_details
 #this function takes an integer representing the serviceID
@@ -275,6 +275,14 @@ def make_songleaders_combo(result):
 
 
     return comboString
+
+#convertDateTime
+#this function takes a date time format string from an html datetime input
+#returns the datetime string formatted for use with a mysql database
+def convertDateTime(original):
+    date, time = original.split("T")
+    result = date + "+" + time + r"%3A00"
+    return result
 
 
 if __name__ == "__main__":
