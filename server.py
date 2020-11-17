@@ -98,7 +98,10 @@ def createService():
     # result[5] code
     # result[4] message
 
-
+    theme, songleader, result = get_service_details(datetime)
+    
+    if theme == None: theme = "None"
+    if songleader == None: songleader = "None"
 
 
     with open('service_creation.html') as creation:
@@ -114,6 +117,12 @@ def createService():
         return page
 
 
+
+@app.route("/add-songs")
+def add_songs():
+    page = ''
+
+    return page
 
 
 
@@ -272,6 +281,91 @@ def make_songleaders_combo(result):
 
 
     return comboString
+
+
+#create_songs_table
+#takes result as a set of service items
+#returns a string with the table with options available to select
+def create_songs_table(result):
+    songsDetails = ""
+
+    numSongs = 0
+    for row in result:
+        sequence, event, title, name, notes = row
+        
+
+        # this if statement checks affects the title based on the 
+        # event type and current title 
+
+        # if the event is a congregational song  
+        if event == "Cong. Song": 
+        # we want the user to select a title from the dropdown
+            titleList = select_title()
+            title = f"""
+            <select id="songNumber{numSongs}" name="songNmber{numSongs}">
+                {titleList}
+            </select>
+            """
+            numSongs += 1
+        # otherwise, we want to know if title is None
+        # if the title is None and we're not dealing with a congregational
+        # then we want the title to be blank
+        elif title == None: title = ""
+
+        if notes == None: notes = ""
+        if name == None: name = ""
+
+        table_row = f"""
+        <tr>
+            <td class="table_cell">{sequence}</td>
+            <td class="table_cell">{event}</td>
+            <td class="table_cell">{title}</td>
+            <td class="table_cell">{name}</td>
+            <td class="table_cell">{notes}</td>
+        </tr>
+        """
+    
+        songsDetails += table_row
+
+
+
+        
+
+    return songsDetails
+
+
+#select_title
+#takes no arguments
+#returns a string representing a list of recently used song options
+def select_title():
+    con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
+    curcon =  con.cursor()
+
+    curcon.execute("select Song_ID, Title, LastUsedDate from songusageview")
+
+    result = curcon.fetchall()
+
+    #take the result and make an html drop down from it
+
+    comboString = ""
+
+    # this loop breaks if it runs out of results or it grabs 20 results
+    # whichever comes first
+    i = 0
+    for row in result:
+        song, name, date = row
+        comboString += f"""
+        <option value="{song}">{name} (Last used on {date})</option>
+        """
+
+        if i >= 20: break
+        else: i += 1
+
+
+
+    return comboString
+
+
 
 
 if __name__ == "__main__":

@@ -23,6 +23,16 @@
             margin-bottom: 10;
         }
 
+        .service_form{
+            max-width: 800;
+            min-width: 600;
+            min-height: 200;
+            margin-top: 20;
+            margin-left: auto;
+            margin-right: auto;
+            
+            font-family: Arial, Helvetica, sans-serif;
+        }
         
     </style>
 
@@ -30,13 +40,50 @@
 
 
 <body>
-    <div class="home_button">
+    <div class="service_form">
         <a href="/" class="home_button">Home</a>
     </div>
+    
+    
+    <div class="content">
+        
+        <p class="form_title">Add Songs</p>
+        <form action="/add-songs">
+            
+            <div class="horizontal_group">
+                <p class="head_info">Date and Time: </p> <p class="head_data"><!--{0}--></p>
+            </div>
+            <div>
+                <p class="head_info">Theme/Event: </p> <p class="head_data"><!--{0}--></p>
+            </div>
+            <div>
+                <p class="head_info">Song Leader: </p> <p class="head_data"><!--{0}--></p>
+            </div>
+            
+            
+            <table class="table">
+                <tr>
+                    <th>Sequence</th>
+                    <th>Event</th>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Notes</th>
+                </tr>
+                
+                <!--{0}-->
+                
+            </table><br><br>
 
-    <p>
-        <!--{0}-->
-    </p>
+
+            <input type="hidden" id="songCount" name="songCount" value="<!--{0}-->"/>
+        
+            <input type="submit" value="Add Songs">
+        </form>
+    </div>
+
+    <div class="service_form">
+
+    </div> 
 
 </body>
 
