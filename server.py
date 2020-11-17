@@ -94,7 +94,6 @@ def createService():
 
     #call stored procedure
     result = curcon.callproc("create_service", (template, datetime, theme, songleader))
-    #get results of xander's procedure
     # result[5] code
     # result[4] message
 
