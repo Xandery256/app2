@@ -133,23 +133,32 @@ def createService():
 
 @app.route("/results")
 def results():
+    con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
+    curcon =  con.cursor()
+    con.autocommit = True
     
     numSongs = request.args.get("songCount")
     numSongs = int(numSongs)
 
+    msg = ""
+
     datetime = request.args.get("svcDate") 
     for i in range(0, numSongs):
-        songNum = request.args.get(f"songNumber{i}")
         songSeq = request.args.get(f"songSeq{i}")
-        #
+        songNum = request.args.get(f"songNumber{i}")
+        result = curcon.callproc("Update_songs", (datetime, songSeq, songNum, 0))
+
+        if result[3] == 0 : msg = "Your service has been updated"
+        else: msg = "An error occurred"
+        
+
     
-    msg = ""
 
     page = ""
 
     with open("results.html") as resPage:
         page = resPage.read()
-        pages = resPage.split(delim)
+        pages = page.split(delim)
 
 
         page = pages[0] + msg + pages[1]
