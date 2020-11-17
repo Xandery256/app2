@@ -93,9 +93,11 @@ def createService():
     songleader = request.args.get('songleader')
 
     #call stored procedure
-    result = curcon.callproc("create_service", (template, datetime, theme, songleader))
-    # result[5] code
-    # result[4] message
+    result = curcon.callproc("create_service", (template, datetime, theme, songleader, 1))
+    
+    # result[4] code
+    if result[4] == 0: msg = "Your service has been created"
+    else: msg = "A service already exists at that time"
 
     theme, songleader, result = get_service_details(datetime)
     
@@ -108,9 +110,8 @@ def createService():
         # pageTop, pageBottom = page.split(delim)
 
         pages = page.split(delim)
-        page  = pages[0] + result[5] 
-        page += pages[1] + result[4]
-        page += pages[2]
+        page  = pages[0] + msg
+        page += pages[1]
 
 
         return page
