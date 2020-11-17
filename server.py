@@ -87,7 +87,7 @@ def createService():
     template = request.args.get('template')
     #get datetime
     datetime = request.args.get('datetime')
-    
+    datetime = datetime.replace("T", " ")
 
     #get theme
     theme = request.args.get('theme')
@@ -98,13 +98,18 @@ def createService():
     #call stored procedure
     result = curcon.callproc("create_service", (template, datetime, theme, songleader, 1))
     
-    # result[4] code
-    print('Error code: ' + str(result[4]))
     if result[4] == 0: msg = "Your service has been created"
     else: msg = "A service already exists at that time"
 
+
+
+    # result[4] code
+    #print('Error code: ' + str(result[4]))
+
     theme, songleader, result = get_service_details(datetime)
     
+    detailTable, songCount = make_songs_table(result)
+
     if theme == None: theme = "None"
     if songleader == None: songleader = "None"
 
@@ -114,16 +119,44 @@ def createService():
         # pageTop, pageBottom = page.split(delim)
 
         pages = page.split(delim)
-        page  = pages[0] + msg
-        page += pages[1]
+        page  = pages[0] + datetime
+        page += pages[1] + theme
+        page += pages[2] + songleader
+        page += pages[3] + detailTable
+        page += pages[4] + str(songCount)
+        page += pages[5] + datetime
+        page += pages[6]
 
         return page
 
 
 
-@app.route("/add-songs")
-def add_songs():
-    page = ''
+@app.route("/results")
+def results():
+    
+    numSongs = request.args.get("songCount")
+    numSongs = int(numSongs)
+
+    datetime = request.args.get("svcDate") 
+    for i in range(0, numSongs):
+        songNum = request.args.get(f"songNumber{i}")
+        songSeq = request.args.get(f"songSeq{i}")
+        #
+    
+    msg = ""
+
+    page = ""
+
+    with open("results.html") as resPage:
+        page = resPage.read()
+        pages = resPage.split(delim)
+
+
+        page = pages[0] + msg + pages[1]
+
+
+
+    
 
     return page
 
@@ -159,7 +192,7 @@ def get_services():
 #get_service_details
 #this function takes an integer representing the serviceID
 #and returns a tuple with the results of select statement
-def get_service_details(serviceDate: int):
+def get_service_details(serviceDate):
     con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
     curcon =  con.cursor()
     
@@ -289,13 +322,12 @@ def make_songleaders_combo(result):
 #create_songs_table
 #takes result as a set of service items
 #returns a string with the table with options available to select
-def create_songs_table(result):
+def make_songs_table(result):
     songsDetails = ""
 
     numSongs = 0
     for row in result:
         sequence, event, title, name, notes = row
-        
 
         # this if statement checks affects the title based on the 
         # event type and current title 
@@ -305,9 +337,10 @@ def create_songs_table(result):
         # we want the user to select a title from the dropdown
             titleList = select_title()
             title = f"""
-            <select id="songNumber{numSongs}" name="songNmber{numSongs}">
+            <select id="songNumber{numSongs}" name="songNumber{numSongs}">
                 {titleList}
             </select>
+            <input type="hidden" id="songSeq{numSongs}" name="songSeq{numSongs}" value="{sequence}"/>
             """
             numSongs += 1
         # otherwise, we want to know if title is None
@@ -328,13 +361,9 @@ def create_songs_table(result):
         </tr>
         """
     
-        songsDetails += table_row
+        songsDetails += table_row       
 
-
-
-        
-
-    return songsDetails
+    return songsDetails, numSongs
 
 
 #select_title
