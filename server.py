@@ -80,22 +80,26 @@ def get_details():
 def createService():
     con = connect(user=dbconfig.USERNAME, password=dbconfig.PASSWORD, database='wsoapp2', host=dbconfig.HOST)
     curcon =  con.cursor()
-    
+    con.autocommit = True
     #general pattern for getting a piece of information from the webpage
     # var = request.args.get('var')
     #get template datetime
     template = request.args.get('template')
     #get datetime
     datetime = request.args.get('datetime')
+    
+
     #get theme
     theme = request.args.get('theme')
     #get songleader id
     songleader = request.args.get('songleader')
 
+
     #call stored procedure
     result = curcon.callproc("create_service", (template, datetime, theme, songleader, 1))
     
     # result[4] code
+    print('Error code: ' + str(result[4]))
     if result[4] == 0: msg = "Your service has been created"
     else: msg = "A service already exists at that time"
 
@@ -113,7 +117,6 @@ def createService():
         page  = pages[0] + msg
         page += pages[1]
 
-
         return page
 
 
@@ -123,7 +126,6 @@ def add_songs():
     page = ''
 
     return page
-
 
 
 #this part is just for aesthetic to make the app a bit nicer
@@ -152,6 +154,7 @@ def get_services():
 
     result = curcon.fetchall()
     return result
+
 
 #get_service_details
 #this function takes an integer representing the serviceID
